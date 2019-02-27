@@ -715,7 +715,10 @@ def _helper_simplify(eq, hint, match, simplify=True, ics=None, **kwargs):
         else:
             rv1 = []
             for s in rv:
-                solved_constants = solve_ics([s], [r['func']], cons(s), ics)
+                try:
+                    solved_constants = solve_ics([s], [r['func']], cons(s), ics)
+                except NotImplementedError:
+                    continue
                 rv1.append(s.subs(solved_constants))
             rv = rv1
     return rv
